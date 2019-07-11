@@ -1,0 +1,102 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.grid-box {
+    width: 80vw;
+    height: 80vh;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-areas:
+      "head head head head"
+      "rooms chat chat chat"
+      "rooms chat chat chat"
+      "rooms chat chat chat"
+      "rooms chat chat chat"
+}
+/*
+@media screen and (min-width: 1000px){
+    .grid-box {
+    width: 80vw;
+    height: 80vh;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-areas:
+      "rooms chat chat chat"
+      "rooms chat chat chat"
+      "rooms chat chat chat"
+      "rooms chat chat chat"
+    }
+}
+*/
+
+h1 {
+  color: rgba(5, 255, 161, 0.6);
+  grid-area: head;
+  margin: auto;
+}
+
+.room-box {
+    background-color: rgba(255, 113, 206, 0.6);
+    grid-area: rooms;
+}
+
+.chat-box {
+    background-color: rgba(1, 205, 254, 0.7);
+    grid-area: chat;
+}
+
+
+.active {
+  box-shadow: 2px 2px 7px 1px rgba(255,251,150, 0.6);
+}
+
+#chatarea {
+    box-shadow: 2px 2px 7px 1px rgba(1, 205, 254, 0.7);
+    overflow: hidden;
+}
+
+#room-name {
+
+    position: absolute;
+    top: 80%;
+    width: 25%;
+
+}
+
+#chatfield {
+  position: absolute;
+  top: 80%;
+  width: 60%;
+}
+
+#rsubmit {
+  position: absolute;
+  top: 80%;
+  width: 5vw;
+  z-index: 1;
+  right: 70%;
+}
+
+#csubmit {
+  position: absolute;
+  top: 80%;
+  width: 5vw;
+  z-index: 1;
+  right: 10%;
+
+}
+
+.time {
+    font-size: 8px;
+    opacity: 0.5;
+}
