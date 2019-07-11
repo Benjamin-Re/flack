@@ -4,106 +4,32 @@
     <meta charset="UTF-8">
 
     <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
-    <script>
-
-        document.addEventListener('DOMContentLoaded', () => {
-            name = localStorage.getItem('name');
-            document.querySelector('#name').innerHTML = name;
-
-            // Connect to websocket
-            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-
-            // When connected, ...
-            socket.on('connect', () => {
-                console.log('socket connected');
-                // Listen for message submit
-                document.querySelector('#chatbox').onsubmit = () => {
-
-                    // retrieve text message from input field
-                    var message = document.querySelector('#chatfield').value;
-
-                    // emit message to server
-                    socket.emit('submit message', {'message': message, 'name': name});
-                    console.log('message submitted');
-                    // clear input field
-                    document.querySelector('#chatfield').value = '';
-                    return false;
-                }
-
-                // Listen for chatroom submit
-                document.querySelector('#chatroom').onsubmit = () => {
-
-                    // retrieve chatroom name from input field
-                    var chatroom = document.querySelector('#room-name').value;
-
-                    // emit chatroom name to server
-                    socket.emit('submit chatroom', {'chatroom': chatroom});
-                    console.log('chatroom submitted');
-                    // clear input field
-                    document.querySelector('#chatroom').value = '';
-                    return false;
-
-                }
-
-
-            });
-
-            // When the server announces the message
-            socket.on('announce message', data => {
-                // create, fill and append li
-                const li = document.createElement('li');
-                li.innerHTML = data.name + ': ' + data.message;
-                document.querySelector('#chatarea').append(li);
-                console.log('message announced');
-            });
-
-            // When the server announces a chatroom
-            socket.on('announce chatroom', data => {
-                // add chatrooms
-                const li = document.createElement('li');
-                li.innerHTML = data.chatroom;
-                li.setAttribute('data-set', data.chatroom);
-                document.querySelector('#chatrooms').append(li);
-                console.log('chatroom announced');
-
-                // make chatrooms clickable
-                var elements = document.querySelectorAll('li');
-                elements.forEach(function(li) {
-                    li.onclick = function() {
-                        console.log(li.getAttribute('data-set'));
-
-                    }
-                });
-
-
-            });
-
-
-
-
-        });
-    </script>
+    <script src="/static/javascript2.js"></script>
     <title>Chat</title>
+    <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 </head>
 <body>
-<h1>Chatbox for <span id="name">stranger</span></h1>
-<div class="d-flex flex-row bd-highlight mb-3">
-    <div class="p-2 bd-highlight">
+
+<div class="grid-box">
+    <h1>Chatbox for <span id="name">stranger</span></h1>
+    <!-- create chatrooms -->
+    <div class="room-box">
         <form id="chatroom">
             <ul id="chatrooms"></ul>
             <input id="room-name" type="text">
-            <input type="submit">
+            <input id="rsubmit" type="submit" value="GO">
         </form>
     </div>
-    <div class="p-2 bd-highlight">
+    <!-- submit chat messages -->
+    <div class="chat-box">
         <form id="chatbox">
             <input id="chatfield" type="text">
-            <input type="submit">
+            <input id="csubmit" type="submit" value="GO">
         </form>
         <ul id="chatarea"></ul>
     </div>
-    
+
 </div>
 </body>
 </html>
