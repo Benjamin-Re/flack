@@ -1,3 +1,5 @@
 # Project 2
 
-Web Programming with Python and JavaScript
+A chat application that allows for the creation of rooms.
+It uses Flask and Javascript (and Socketio on both to communicate).
+
