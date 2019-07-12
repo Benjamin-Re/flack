@@ -53,6 +53,7 @@ h1 {
 .chat-box {
     background-color: rgba(1, 205, 254, 0.7);
     grid-area: chat;
+    overflow: auto;
 }
 
 
@@ -62,7 +63,8 @@ h1 {
 
 #chatarea {
     box-shadow: 2px 2px 7px 1px rgba(1, 205, 254, 0.7);
-    overflow: hidden;
+    list-style-position: inside;
+
 }
 
 #room-name {

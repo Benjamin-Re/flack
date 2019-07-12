@@ -6,7 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
     // To start out general is the active Room
-    var activeRoom = 'general';
+    if (!localStorage.getItem('activeRoom'))
+        localStorage.setItem('activeRoom', 'general');
+    var activeRoom = localStorage.getItem('activeRoom');
+    // time
+    const time=new Date().toLocaleTimeString();
+    // join room
+    socket.emit('join', {'room': activeRoom,
+                        'message': 'has entered the room', 'name': name,
+                        'time': time});
 
 
 
@@ -25,7 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.innerHTML = [x];
             li.setAttribute('data-set', x);
-            li.setAttribute('class', 'room');
+            // if one of the existing rooms is activated give class active
+            if (x == localStorage.getItem('activeRoom')) {
+                li.setAttribute('class', 'active');
+            } else {
+                li.setAttribute('class', 'room');
+            }
             document.querySelector("#chatrooms").append(li);
         }
         clicky(data);
@@ -152,8 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         'time': time});
                     });
                     // Set clicked on room to the new active room
-                    activeRoom = this.dataset.set;
 
+                    localStorage.setItem('activeRoom', this.dataset.set);
+                    activeRoom = localStorage.getItem('activeRoom');
                     // Give it class active, for visuals only
                     this.setAttribute('class', 'active');
                     // load the active rooms messages
