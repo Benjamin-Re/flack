@@ -83,3 +83,9 @@ def leave(data):
     message = {'message': data['message'], 'name': data['name'], 'time': data['time']}
     channels[active].append(message)
     emit("left", {"channels": channels, "active": active, "message": message}, room=active)
+
+@socketio.on('delete')
+def delete(data):
+    global active
+    channels[active].pop(data['index'])
+    emit("load messages", {"channels": channels, "activeRoom": active}, broadcast=True)

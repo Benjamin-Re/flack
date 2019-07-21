@@ -102,3 +102,13 @@ h1 {
     font-size: 8px;
     opacity: 0.5;
 }
+
+.deleted {
+    color: grey;
+    opacity: 0.5;
+    font-size: 10px;
+}
+
+li {
+    list-style: none;
+}

@@ -26,21 +26,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on('load messages', data => {
         // call loadMessages function
-
         loadMessages(data, activeRoom);
         // Load previously created chatrooms on pageload
-        for (x in data["channels"]){
-            const li = document.createElement('li');
-            li.innerHTML = [x];
-            li.setAttribute('data-set', x);
-            // if one of the existing rooms is activated give class active
-            if (x == localStorage.getItem('activeRoom')) {
-                li.setAttribute('class', 'active');
-            } else {
-                li.setAttribute('class', 'room');
-            }
-            document.querySelector("#chatrooms").append(li);
+        var oldRooms = document.querySelectorAll('#chatrooms li');
+        var oldRooms2 = [];
+        for(i = 0; i < oldRooms.length; i++){
+            oldRooms2.push(oldRooms[i].innerHTML);
         }
+
+
+        for (x in data["channels"]){
+            if (!oldRooms2.includes(x)) {
+                const li = document.createElement('li');
+                li.innerHTML = [x];
+                li.setAttribute('data-set', x);
+                // if one of the existing rooms is activated give class active
+                if (x == localStorage.getItem('activeRoom')) {
+                    li.setAttribute('class', 'active');
+                } else {
+                    li.setAttribute('class', 'room');
+                }
+                document.querySelector("#chatrooms").append(li);
+            }
+        }
+
+
         clicky(data);
     });
 
@@ -146,7 +156,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // Delete messages
+    // Add event listener to the parent ul
+    document.getElementById("chatarea").addEventListener('click', function(e){
+        // e is the element clicked on
+        // If the element is an li
+        if (e.target && e.target.nodeName == "LI") {
+            // Check if message is user's own
+            var word = e.target.innerHTML.split(": ");
+            if (name == word[0]) {
+                // Change clicked on elements html
+                e.target.innerHTML="deleted";
+                // And add a class to change the font
+                e.target.setAttribute('class', 'deleted');
+                // Get the index of the clicked on element
+                // Make an array out of the ul node list
+                var listArray = Array.from(e.currentTarget.children);
+                console.log(listArray);
+                // find the target's place in this array, which is the index
+                const index = listArray.indexOf( e.target );
+                console.log(index);
+                // let the server know to delete the message for real
+                socket.emit('delete', {"index": index});
+            }
 
+        }
+    })
 
     // make chatrooms clickable
     function clicky(data) {
@@ -187,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("loading");
         canvas = Array.from(document.querySelectorAll('#chatarea > li'));
         for (i = 0; i < canvas.length; i++) {
-            canvas[i].style.display = "none";
+            canvas[i].remove();
         }
 
         // get all elements of the active List/ Room
