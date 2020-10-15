@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+    <script src="/static/javascript2.js"></script>
+    <title>Chat</title>
+    
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    
+</head>
+<body>
+
+<div class="grid-box">
+    <h1>Chatbox for <span id="name">stranger</span></h1>
+    <!-- create chatrooms -->
+    <div class="room-box">
+        <form id="chatroom">
+            <ul id="chatrooms"></ul>
+			<p>Create chatroom:</p>
+            <input id="room-name" type="text">
+            <input id="rsubmit" type="submit" value="GO">
+        </form>
+    </div>
+    <!-- submit chat messages -->
+    <div class="chat-box">
+        <form id="chatbox">
+			<p>Write chatmessage:</p>
+            <input id="chatfield" type="text">
+            <input id="csubmit" type="submit" value="GO">
+        </form>
+        <ul id="chatarea"></ul>
+    </div>
+
+</div>
+</body>
+</html>

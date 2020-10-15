@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/static/javascript.js"></script>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <form action="{{ url_for('chat') }}" method="get" class="form-signin" id="name_form" >
+        <h1 class="form-signin-heading">Hello <span id="header"> stranger </span></h1>
+        <p>Type in a name and start chatting</p>
+        <input class="form-control" id="name" type="text" placeholder="name" name="name">
+        <input class="btn btn-lg btn-block btn-primary go" value="GO!" type="submit">
+    </form>
+</div>
+</body>
+</html>
